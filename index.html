@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="options-box">
+				<h3>My Google Map</h3>
+				<button data-bind="click: showMarkers">Show</button>
+				<button data-bind="click: hideMarkers">Hide</button>
+<!-- 				<div>
+					<input type="radio" name="type" value="FOOD" data-bind="checked: filterCriteria, click: filterMarkers">
+					<input type="radio" name="type" value="VISIT" data-bind="checked: filterCriteria, click: filterMarkers">
+				</div>  -->
+				<!-- MAP DIV -->
+				<div id="map"></div>
+				<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+				<script src="secrets.js"></script>
+				<script src="app.js"></script>
+				<script async defer
+		   			 src="https://maps.googleapis.com/maps/api/js?v=3&libraries=places,drawing,geometry&key=AIzaSyAKB4YM91KCe-8Jw0QyL0nhNxfpEKsHPEc&callback=initMap">
+				</script>
+			</div>
+		</div>
+	</body>
+</html>

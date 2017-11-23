@@ -9,6 +9,12 @@
 				<h3>My Google Map</h3>
 				<button data-bind="click: showMarkers">Show</button>
 				<button data-bind="click: hideMarkers">Hide</button>
+				<!-- Create ListView -->
+				<div>
+					<ul data-bind="foreach: markers">
+						<li data-bind="text: title, click: $root.populateListInfoWindow"></li>
+					</ul>
+				</div>
 <!-- 				<div>
 					<input type="radio" name="type" value="FOOD" data-bind="checked: filterCriteria, click: filterMarkers">
 					<input type="radio" name="type" value="VISIT" data-bind="checked: filterCriteria, click: filterMarkers">

@@ -76,6 +76,7 @@ function ViewModel() {
         var marker = new google.maps.Marker({
         position: location.location,
         title: location.title,
+        venue_id: location.venue_id,
         description: ko.observable(location.description),
         type: location.type,
         icon: self.defaultIcon,
@@ -105,13 +106,40 @@ function ViewModel() {
     self.populateInfoWindow = function(marker, infoWindow) {
         if (infoWindow.marker != marker) {
             infoWindow.marker = marker;
-            infoWindow.setContent(marker.description());
+            // Make AJAX request to FourSquare API
+            var content = "";
+            $.ajax({
+              type: 'GET',
+              url: 'https://api.foursquare.com/v2/venues/' + marker.venue_id,
+              data: {
+                client_id: keys.fourSquare.client_id,
+                client_secret: 'HIMK4V53L5IXIB0HVREBO04JN5UQU0R55WZLOSMPLA33DAJM',
+                v: '20170801'
+            },
+              success: function(data, textStats, XMLHttpRequest) {
+                console.log('YeeHah!!!');
+                console.log(data['response']['venue']['url']);
+                content += data['response']['venue']['location']['formattedAddress'];
+                content += data['response']['venue']['url'];
+                content += '<p>' +data['response']['venue']['price']['message'] + '</p>';
+                content += '<p>' + data['response']['venue']['contact']['formattedPhone'] + '</p>'; 
+                content += data['response']['venue']['rating'];
+                infoWindow.setContent(content);
+              },
+              error: function(){
+                  alert("Oh No, Your request did not succeed!")
+              }
+            });
 
             infoWindow.addListener('closeclick', function() {
                 infoWindow.marker = null;
             });
             infoWindow.open(map, marker);
         }
+    }
+
+    self.populateListInfoWindow = function(marker) {
+      self.populateInfoWindow(marker, self.largeInfoWindow);
     }
 
  
@@ -249,45 +277,3 @@ function initMap() {
 //Bind the ViewModel to out page inside of initMap
 ko.applyBindings(new ViewModel());
 } // End initMap().
-
-
-
-
-
-
-
-$.ajax({
-    type: 'GET',
-    url: 'https://api.foursquare.com/v2/venues/500b03b9e4b03e9236b232fb',
-    data: {
-      client_id: keys.fourSquare.client_id,
-      client_secret: 'HIMK4V53L5IXIB0HVREBO04JN5UQU0R55WZLOSMPLA33DAJM',
-      v: '20170801'
-  },
-    success: function(data, textStats, XMLHttpRequest) {
-      console.log('YeeHah!!!');
-      console.log(data['response']['venue']['contact']['formattedPhone']);
-      console.log(data['response']['venue']['location']['formattedAddress']);
-      console.log(data['response']['venue']['url']);
-      console.log(data['response']['venue']['price']['message']);
-      console.log(data['response']['venue']['rating']);
-    },
-    error: function(){
-        alert("Oh No, Your request did not succeed!")
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -7,18 +7,28 @@
 		<div class="container">
 			<div class="options-box">
 				<h3>My Google Map</h3>
-				<button data-bind="click: showMarkers">Show</button>
+				<button data-bind="click: showMarkers">Show All</button>
 				<button data-bind="click: hideMarkers">Hide</button>
 				<!-- Create ListView -->
 				<div>
 					<ul data-bind="foreach: markers">
-						<li data-bind="text: title, click: $root.populateListInfoWindow"></li>
+						<!-- TODO: End logic to hide values that are filtered!!! -->
+						<div data-bind="ifnot: filtered">
+							<li data-bind="text: title, click: $root.populateInfoWindowByListClick"></li>
+						</div>
 					</ul>
 				</div>
-<!-- 				<div>
-					<input type="radio" name="type" value="FOOD" data-bind="checked: filterCriteria, click: filterMarkers">
-					<input type="radio" name="type" value="VISIT" data-bind="checked: filterCriteria, click: filterMarkers">
-				</div>  -->
+				<form>
+					<div>
+						<input type="radio" name="type" id="affordable" value="AFFORDABLE" data-bind="checked: filterCriteria">
+						<label for="affordable">Affordable</label>
+						<input type="radio" name="type" id="moderate" value="UPPER-MID RANGE" data-bind="checked: filterCriteria">
+						<label for="moderate">Moderate</label>
+					</div> 
+					<div>
+					    <button type="submit" data-bind="click: filterMarkers">Submit</button>
+					</div>
+				</form>
 				<!-- MAP DIV -->
 				<div id="map"></div>
 				<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

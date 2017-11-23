@@ -6,7 +6,7 @@ var locations = [
       location: {lat: 55.9543 ,lng: -3.1980},
       venue_id: "4b058822f964a520d9b322e3",
       description: "Vegetarian, vegan, organic and fresh, with the tastiest veggie haggis in town!",
-      type: 'AFFORDABLE'
+      type: 'AFFORDABLE',
     },
     {
       title: "The Gardener's Cottage",
@@ -14,13 +14,14 @@ var locations = [
       venue_id: "500b03b9e4b03e9236b232fb",
       description: "The coolest place with the most interesting, seasonal tasting menus in Edinburgh!",
       type: 'UPPER-MID RANGE'
+    },
+    {
+      title: "Earthy Foods and Goods",
+      location: {lat: 55.934634 ,lng: -3.178672},
+      venue_id: "4bc051ac920eb71397c8182c",
+      description: "Alternative, close to nature place with fresh, organic, local and super tasty foods! Highly recommend the most amazing salads!",
+      type: 'AFFORDABLE'
     }
-    // {
-    //   title: "Earthy Foods and Goods",
-    //   location: {lat: 55.934634 ,lng: -3.178672},
-    //   description: "Alternative, close to nature place with fresh, organic, local and super tasty foods! Highly recommend the most amazing salads!",
-    //   type: 'AFFORDABLE'
-    // },
     // {
     //   title: "Roseleaf",
     //   location: {lat: 55.9760 ,lng: -3.1735},
@@ -81,7 +82,8 @@ function ViewModel() {
         type: location.type,
         icon: self.defaultIcon,
         animation: google.maps.Animation.DROP,
-        map: map
+        map: map,
+        filtered: ko.observable(false)
         })
         //LISTENERS FOR THE MOUSE ACTIONS
         marker.addListener('click', function() {
@@ -104,10 +106,10 @@ function ViewModel() {
 
 
     self.populateInfoWindow = function(marker, infoWindow) {
+        var content = "";
         if (infoWindow.marker != marker) {
             infoWindow.marker = marker;
             // Make AJAX request to FourSquare API
-            var content = "";
             $.ajax({
               type: 'GET',
               url: 'https://api.foursquare.com/v2/venues/' + marker.venue_id,
@@ -117,47 +119,59 @@ function ViewModel() {
                 v: '20170801'
             },
               success: function(data, textStats, XMLHttpRequest) {
-                console.log('YeeHah!!!');
-                console.log(data['response']['venue']['url']);
-                content += data['response']['venue']['location']['formattedAddress'];
-                content += data['response']['venue']['url'];
-                content += '<p>' +data['response']['venue']['price']['message'] + '</p>';
-                content += '<p>' + data['response']['venue']['contact']['formattedPhone'] + '</p>'; 
-                content += data['response']['venue']['rating'];
+                try {
+                  content += data['response']['venue']['location']['formattedAddress'];
+                  content += '<p>' + data['response']['venue']['url'] + '</p>';
+                  content += '<p>' +data['response']['venue']['price']['message'] + '</p>';
+                  content += '<p>' + data['response']['venue']['contact']['formattedPhone'] + '</p>'; 
+                  content += data['response']['venue']['rating'];
+                } catch (err) {
+                  content = "Oh, no!!! Unable to get info at the moment!";
+                }
                 infoWindow.setContent(content);
+                infoWindow.addListener('closeclick', function() {
+                  infoWindow.marker = null;
+                });
+                infoWindow.open(map, marker);
               },
               error: function(){
-                  alert("Oh No, Your request did not succeed!")
+                alert("Oh No, Your request did not succeed!")
+                content += 'Could not retrieve data';
+                infoWindow.setContent(content);
+                infoWindow.addListener('closeclick', function() {
+                  infoWindow.marker = null;
+                });
+                infoWindow.open(map, marker);
               }
+            
             });
-
-            infoWindow.addListener('closeclick', function() {
-                infoWindow.marker = null;
-            });
-            infoWindow.open(map, marker);
         }
     }
 
-    self.populateListInfoWindow = function(marker) {
+    // Call populateInfoWindow and pass in self.largeInfoWindow.
+    // Used in the list view in index.html
+    self.populateInfoWindowByListClick = function(marker) {
+      self.hideMarkers();
+      marker.setMap(map);
       self.populateInfoWindow(marker, self.largeInfoWindow);
     }
 
  
-
+    // Display all the markers on the map.
     self.showMarkers = function() {
         self.markers().forEach(function(marker) {
             marker.setMap(map);
+            marker.filtered(false);
         });
     }
 
+    // Hide all the markers.
     self.hideMarkers = function() {
         self.markers().forEach(function(marker) {
             marker.setMap(null);
+            marker.filtered(true);
         });
     }
-
-    
-
 
     // Get filtering criteria for filterMarkers() function.
     self.filterCriteria = ko.observable("");
@@ -167,8 +181,10 @@ function ViewModel() {
         self.markers().forEach(function(marker) {
             if (marker.type != self.filterCriteria()) { 
                 marker.setMap(null);
+                marker.filtered(true);
             } else {
                 marker.setMap(map);
+                marker.filtered(false);
             }
         });
     }

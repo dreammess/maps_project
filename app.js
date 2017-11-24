@@ -21,31 +21,35 @@ var locations = [
       venue_id: "4bc051ac920eb71397c8182c",
       description: "Alternative, close to nature place with fresh, organic, local and super tasty foods! Highly recommend the most amazing salads!",
       type: 'AFFORDABLE'
+    },
+    {
+      title: "Roseleaf",
+      location: {lat: 55.9760 ,lng: -3.1735},
+      venue_id: "4b239e33f964a520435724e3",
+      description: "Every Mad Hatter's favourite pub/bistro food in Edinburgh!",
+      type: 'AFFORDABLE'
+    },
+    {
+      title: "Aizle",
+      location: {lat: 55.9418 ,lng: -3.1788},
+      venue_id: "53501746498e711ba8d597b5",
+      description: "Local, seasonal tasting menus paired with great cocktails!",
+      type: 'UPPER-MID RANGE'
+    },
+    {
+      title: "Peter's Yard",
+      location: {lat: 55.9436 ,lng: -3.1919},
+      venue_id: "4b2656aaf964a520517a24e3",
+      description: "Best crisp swedish bread, fresh quick lunch options and the best swedish cinnamon buns in town!",
+      type: 'AFFORDABLE'
+    },
+    {
+      title: "Kalpna",
+      location: {lat: 55.9435 ,lng: -3.1832},
+      venue_id: "4b058821f964a520b9b322e3",
+      description: "Vegetarian, indian food, full of flavour  ",
+      type: 'AFFORDABLE'
     }
-    // {
-    //   title: "Roseleaf",
-    //   location: {lat: 55.9760 ,lng: -3.1735},
-    //   description: "Every Mad Hatter's favourite pub/bistro food in Edinburgh!",
-    //   type: 'AFFORDABLE'
-    // },
-    // {
-    //   title: "Aizle",
-    //   location: {lat: 55.9418 ,lng: -3.1788},
-    //   description: "Local, seasonal tasting menus paired with great cocktails!",
-    //   type: 'UPPER-MID RANGE'
-    // },
-    // {
-    //   title: "Peter's Yard",
-    //   location: {lat: 55.9436 ,lng: -3.1919},
-    //   description: "Best crisp swedish bread, fresh quick lunch options and the best swedish cinnamon buns in town!",
-    //   type: 'AFFORDABLE'
-    // },
-    // {
-    //   title: "Kalpna",
-    //   location: {lat: 55.9435 ,lng: -3.1832},
-    //   description: "Vegetarian, indian food, full of flavour  ",
-    //   type: 'AFFORDABLE'
-    // }
 
 ];
 
@@ -153,6 +157,7 @@ function ViewModel() {
     self.populateInfoWindowByListClick = function(marker) {
       self.hideMarkers();
       marker.setMap(map);
+      marker.filtered(false);
       self.populateInfoWindow(marker, self.largeInfoWindow);
     }
 
@@ -173,13 +178,10 @@ function ViewModel() {
         });
     }
 
-    // Get filtering criteria for filterMarkers() function.
-    self.filterCriteria = ko.observable("");
-
-    // Filter displayed markers based on filterCriteria ko.observable.
-    self.filterMarkers = function() {
+    // Filter displayed markers based on user selection.
+    self.filterMarkers = function(filterCriteria) {
         self.markers().forEach(function(marker) {
-            if (marker.type != self.filterCriteria()) { 
+            if (marker.type != filterCriteria) { 
                 marker.setMap(null);
                 marker.filtered(true);
             } else {
@@ -243,17 +245,25 @@ function initMap() {
       { weight: 9 },
       { hue: '#e85113' }
     ]
-  },{
+  },
+  {
+    featureType: 'transit.station.rail',
+    stylers: [
+      { color: '#4C0000' }
+    ]
+  },
+  {
     featureType: 'poi',
     elementType: 'geometry',
     stylers: [
       { visibility: 'on' },
-      { color: '#f0e4d3' }
+      { color: '#f2ce21' }
+      // #f0e400
     ]
   },{
     featureType: 'poi.park',
     elementType: 'geometry.fill',
-    stylers: [{color: '#E8C000'}
+    stylers: [{color: '#43ba5a'}
     ]
   },{
     featureType: 'poi.park',
@@ -264,8 +274,8 @@ function initMap() {
     featureType: 'road',
     elementType: 'geometry.fill',
     stylers: [
-      { color: '#EC8048' },
-      { lightness: 10 }
+      { color: '#003C64' },
+      { lightness: 30 }
     ]
   },{
     featureType: 'road.highway',
@@ -277,7 +287,7 @@ function initMap() {
     featureType: 'road.highway',
     elementType: 'geometry.fill',
     stylers: [
-      { color: '#F8E38C' },
+      { color: '#EC8048' },
       { lightness: -25 }
     ]
   }

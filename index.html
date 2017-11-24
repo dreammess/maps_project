@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<link rel="stylesheet" type="text/css" href="styles.css">
+        <meta name="viewport" content="width=device-width">
+        <!-- Load Bootstrap, CSS and Fonts -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	    <link rel="stylesheet" type="text/css" href="styles.css">
+	    <link href="https://fonts.googleapis.com/css?family=Loved+by+the+King|Raleway:300|Vibur|Grand+Hotel|Pompiere|Zeyada" rel="stylesheet">
+        <title>The Green Edinburgh Food Map</title>
 	</head>
 	<body>
-		<div class="container">
-			<div class="options-box">
-				<h3>My Google Map</h3>
-				<button data-bind="click: showMarkers">Show All</button>
-				<button data-bind="click: hideMarkers">Hide</button>
+		<div class=".container-fluid">
+			<div class="options-box border-0">
+				<h2>The Green Edinburgh<br>Food Map</h2>
+				<button type="button" class="btn btn-outline-success" data-bind="click: showMarkers">Show All</button>
+				<button type="button" class="btn btn-outline-danger" data-bind="click: hideMarkers">Hide All</button>
 				<!-- Create ListView -->
 				<div>
 					<ul data-bind="foreach: markers">
-						<!-- TODO: End logic to hide values that are filtered!!! -->
 						<div data-bind="ifnot: filtered">
 							<li data-bind="text: title, click: $root.populateInfoWindowByListClick"></li>
 						</div>
 					</ul>
 				</div>
-				<form>
-					<div>
-						<input type="radio" name="type" id="affordable" value="AFFORDABLE" data-bind="checked: filterCriteria">
-						<label for="affordable">Affordable</label>
-						<input type="radio" name="type" id="moderate" value="UPPER-MID RANGE" data-bind="checked: filterCriteria">
-						<label for="moderate">Moderate</label>
-					</div> 
-					<div>
-					    <button type="submit" data-bind="click: filterMarkers">Submit</button>
-					</div>
-				</form>
+				<button type="button" class="btn btn-outline-info" value="UPPER-MID RANGE" data-bind="click: function(){ filterMarkers('UPPER-MID RANGE') };">Feeling Fancy</button>
+				<button type="button" class="btn btn-outline-warning" value="AFFORDABLE" data-bind="click: function(){ filterMarkers('AFFORDABLE') };">Moderate</button>
 				<!-- MAP DIV -->
 				<div id="map"></div>
-				<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+				    <!-- Load jQuery, Popper.js, Knockout.js -->
+			    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+			    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+			    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 				<script src="secrets.js"></script>
 				<script src="app.js"></script>

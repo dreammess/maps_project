@@ -150,7 +150,7 @@ function ViewModel() {
             
             });
         }
-    }
+    } //End populateInfoWindow
 
     // Call populateInfoWindow and pass in self.largeInfoWindow.
     // Used in the list view in index.html

@@ -16,7 +16,30 @@ font-family: 'Zeyada', cursive;
     margin: 0;
     padding: 0;
     background-color: #1C1C1C;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+    background-size: cover;
   }
+
+  img,
+embed,
+object,
+video {
+    max-width: 100%;
+}
+
+
+.clearfix {
+    clear: both;
+}
+
+
+.flow {
+    display: flex;
+    flex-wrap: wrap;
+}
+
   .container {
     height: 100%;
     position: relative;
@@ -57,3 +80,25 @@ font-family: 'Zeyada', cursive;
     margin-bottom: 20px;
     margin-top: 20px;
   }
+
+  /*Responsive!*/
+
+@media screen and (max-width: 800px) {
+    .container {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 599px) and (max-width: 995px) {
+        .container {
+            position: relative;
+            transform: translate(0, 0);
+        }
+        body {
+            display: flex;
+            flex-flow: row nowrap;
+        }
+        .img_flo {
+                display: block;
+                margin: auto;
+        }

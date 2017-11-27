@@ -5,7 +5,7 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css">
-        <!-- Load Bootstrap, CSS and Fonts -->
+        <!-- LOAD BOOTSTRAP, CSS, FONTS -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	    <link rel="stylesheet" type="text/css" href="styles.css">
 	    <link href="https://fonts.googleapis.com/css?family=Loved+by+the+King|Raleway:300|Vibur|Grand+Hotel|Pompiere|Zeyada" rel="stylesheet">
@@ -13,16 +13,16 @@
 	</head>
 	<body>
 
-		<div class="container-fluid">
+		<div class="container-fluid no-gutters">
 			<div class="row">
 
 
-				<!-- Headers and Options Menu -->
+				<!-- HEADERS AND OPTIONS MENU -->
 				<div class="col-sm-4 choices">
 					<h2>The Green Edinburgh<br>Food Map</h2>
 					<button type="button" class="btn btn-outline-success" data-bind="click: showMarkers">Show All</button>
 					<button type="button" class="btn btn-outline-danger" data-bind="click: hideMarkers">Hide All</button>
-					<!-- Create ListView -->
+					<!-- CREATE ListView -->
 					<div>
 						<ul data-bind="foreach: markers">
 							<div data-bind="ifnot: filtered">
@@ -30,6 +30,7 @@
 							</div>
 						</ul>
 					</div>
+					<!-- PRICE CATEGORIES BUTTONS -->
 					<button type="button" class="btn btn-outline-info" value="UPPER-MID RANGE" data-bind="click: function(){ filterMarkers('UPPER-MID RANGE') };">Feeling Fancy</button>
 					<button type="button" class="btn btn-outline-warning" value="AFFORDABLE" data-bind="click: function(){ filterMarkers('AFFORDABLE') };">Moderate</button>
 				</div>
@@ -39,12 +40,12 @@
 					<div id="map"></div>
 				</div>
 
-			</div><!-- Close Row -->
-		</div><!-- Close container -->
+			</div><!-- CLOSE ROW -->
+		</div><!-- CLOSE CONTAINTER -->
 
 
 
-		<!-- Load jQuery, Popper.js, Knockout.js -->
+		<!-- LOAD jQuery, Popper.js, Knockout.js -->
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>

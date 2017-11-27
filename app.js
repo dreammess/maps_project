@@ -120,7 +120,7 @@ function ViewModel() {
                 type: "GET",
                 url: "https://api.foursquare.com/v2/venues/" + marker.venue_id,
                 data: {
-                    client_id: keys.fourSquare.client_id,
+                    client_id: "2HASOPYCNKRPVQ4U0L21TRQ54CWQRFD5YKPTE5SPZ1BXZLAB",
                     client_secret: "HIMK4V53L5IXIB0HVREBO04JN5UQU0R55WZLOSMPLA33DAJM",
                     v: "20170801"
                 },
@@ -133,7 +133,7 @@ function ViewModel() {
                         content += "<h4>Rating: </h4><p>" + data.response.venue.rating + "</p>";
                     } catch (err) {
                         content = "<p>Oh, no!!! Unable to get info at the moment!</p>";
-                        //Log Error to the console.
+                        //LOG ERROR TO THE CONSOLE
                         console.log("Error: " + err);
                     }
                     infoWindow.setContent(content);

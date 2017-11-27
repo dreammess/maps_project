@@ -1,16 +1,7 @@
-/* 
-font-family: 'Loved by the King', cursive;
-font-family: 'Raleway', sans-serif;
-font-family: 'Vibur', cursive;
-font-family: 'Grand Hotel', cursive;
-font-family: 'Pompiere', cursive;
-font-family: 'Zeyada', cursive;
-*/
-
  html,
  body {
     font-family: 'Raleway', sans-serif;
-    font-weight: lighter;
+    font-weight: 300;
     color: #F8F4D0;
     height: 100%;
     margin: 0;
@@ -22,31 +13,14 @@ font-family: 'Zeyada', cursive;
     background-size: cover;
   }
 
-  img,
-embed,
-object,
-video {
-    max-width: 100%;
-}
-
-
-.clearfix {
-    clear: both;
-}
-
-
-.flow {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-  .container {
-    height: 100%;
-    position: relative;
+  .container-fluid {
+    height: 100vh;
   }
-  input {
-    font-size: 12px;
+
+  .choices {
+    height: 100vh;
   }
+
   h2 {
     font-family: 'Grand Hotel', cursive;
     font-weight: 300;
@@ -57,48 +31,63 @@ video {
     padding-bottom: 30px;
     text-align: center;
   }
-  #hide-listings,
-  #show-listings {
-    width: 48%;
+
+  h3 {    
+    font-family: 'Grand Hotel', cursive;
+    font-weight: 300;
+    color: #86C67C;
+    font-size: 25px;
   }
-  #map {
-    bottom:0px;
-    height: 100%;
-    left: 362px;
-    position: absolute;
-    right: 0px;
+
+  p {
+    font-family: 'Zeyada', cursive;
+    font-size: 20px;
+    font-weight: 300;
+    color: #86C67C;
+    padding: 20px;
   }
-  .options-box {
-    height: 100%;
-    line-height: 35px;
-    padding: 20px 10px 40px 40px;
-    text-align: left;
-    width: 340px;
+
+  li {
+    padding: 20px;
   }
-  .btn {
-    margin-left: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-  }
+
+	#map {
+    height: 600px;
+		min-width: 100%;
+		min-height: 100%;
+		margin-right: 0px;
+	}
+
+	.btn {
+	    margin-left: 20px;
+	    margin-bottom: 20px;
+	    margin-top: 20px;
+	}
 
   /*Responsive!*/
 
-@media screen and (max-width: 800px) {
-    .container {
-        width: 100%;
-    }
-}
 
-@media screen and (min-width: 599px) and (max-width: 995px) {
+/* Medium (desktops, 992px and up) to large devices (large desktops, 1200px and up)*/
+@media screen and (min-width: @screen-md-min) and (max-width: @screen-lg-min) {
+
+  }
+
+/* Small (screens, 768px and up) to medium devices (medium desktops, 992px and up)*/
+@media screen and (min-width: @screen-sm-min) and (max-width: @screen-md-min) {
         .container {
             position: relative;
             transform: translate(0, 0);
         }
         body {
             display: flex;
-            flex-flow: row nowrap;
         }
-        .img_flo {
-                display: block;
-                margin: auto;
+
+        #map {
+            display: flex;
+            position: relative;
         }
+
+        li {
+            padding: 8px;
+        }
+  }

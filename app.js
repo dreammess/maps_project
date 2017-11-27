@@ -113,7 +113,7 @@ function ViewModel() {
         var content = "";
         if (infoWindow.marker != marker) {
             infoWindow.marker = marker;
-            // Make AJAX request to FourSquare API
+            // MAKE AJAX REQUEST TO FOURSQUARE API
             $.ajax({
               type: 'GET',
               url: 'https://api.foursquare.com/v2/venues/' + marker.venue_id,
@@ -124,11 +124,11 @@ function ViewModel() {
             },
               success: function(data, textStats, XMLHttpRequest) {
                 try {
-                  content += data['response']['venue']['location']['formattedAddress'];
-                  content += '<p>' + data['response']['venue']['url'] + '</p>';
-                  content += '<p>' +data['response']['venue']['price']['message'] + '</p>';
-                  content += '<p>' + data['response']['venue']['contact']['formattedPhone'] + '</p>'; 
-                  content += data['response']['venue']['rating'];
+                  content += '<h4>Address: </h4><h3>' + data['response']['venue']['location']['formattedAddress'] + '</h3>';
+                  content += '<h4>Call us: </h4><p>' + data['response']['venue']['contact']['formattedPhone'] + '</p>'; 
+                  content += '<h4>Website: </h4><p>' + data['response']['venue']['url'] + '</p>';
+                  content += '<h4>Prices: </h4><p>' +data['response']['venue']['price']['message'] + '</p>';
+                  content += '<h4>Rating: </h4><p>' + data['response']['venue']['rating'] + '</p>';
                 } catch (err) {
                   content = "Oh, no!!! Unable to get info at the moment!";
                 }
@@ -150,10 +150,10 @@ function ViewModel() {
             
             });
         }
-    } //End populateInfoWindow
+    } //END populateInfoWindow
 
-    // Call populateInfoWindow and pass in self.largeInfoWindow.
-    // Used in the list view in index.html
+    // CALL populateInfoWindow AND PASS IN self.largeInfoWindow.
+    // USED IN THE LIST VIEW IN index.html
     self.populateInfoWindowByListClick = function(marker) {
       self.hideMarkers();
       marker.setMap(map);
@@ -162,23 +162,28 @@ function ViewModel() {
     }
 
  
-    // Display all the markers on the map.
+    // DISPLAY ALL THE MARKERS ON THE MAP
     self.showMarkers = function() {
+      
+        self.largeInfoWindow.marker = null;
+        self.largeInfoWindow.close();
         self.markers().forEach(function(marker) {
             marker.setMap(map);
             marker.filtered(false);
         });
     }
 
-    // Hide all the markers.
+    // HIDE ALL THE MARKERS
     self.hideMarkers = function() {
+        self.largeInfoWindow.marker = null;
+        self.largeInfoWindow.close();
         self.markers().forEach(function(marker) {
             marker.setMap(null);
             marker.filtered(true);
         });
     }
 
-    // Filter displayed markers based on user selection.
+    // FILTER DIPLAYED MARKERS BASED ON USER SELECTION
     self.filterMarkers = function(filterCriteria) {
         self.markers().forEach(function(marker) {
             if (marker.type != filterCriteria) { 
@@ -191,10 +196,10 @@ function ViewModel() {
         });
     }
 
-} // End ViewModel().
+} // END ViewModel().
 
 
-// Intialize the google map to display on the page.
+// INITALIZE THE GOOGLE MAP TO DISPLAY ON THE PAGE
 function initMap() {
     var edi = {lat: 55.9533, lng: -3.1883};
 
@@ -258,7 +263,6 @@ function initMap() {
     stylers: [
       { visibility: 'on' },
       { color: '#f2ce21' }
-      // #f0e400
     ]
   },{
     featureType: 'poi.park',
@@ -300,6 +304,6 @@ function initMap() {
     });
 
 
-//Bind the ViewModel to out page inside of initMap
+//BIND THE ViewModel TO OUT PAGE INSIDE OF initMap
 ko.applyBindings(new ViewModel());
-} // End initMap().
+} // END initMap().

@@ -18,7 +18,12 @@
   }
 
   .choices {
-    height: 100vh;
+    /*Using height: 100vh breaks the display in smaller viewports.*/
+    /*height: 100vh;*/
+  }
+
+  .row {
+    height: 100%;
   }
 
   h2 {
@@ -39,15 +44,21 @@
     font-size: 25px;
   }
 
+  h4 {
+    font-family: 'Pompiere', cursive;
+    font-size: 20px;
+    color: #1870A4;
+    padding: 0;
+  }
+
   p {
     font-family: 'Zeyada', cursive;
     font-size: 20px;
-    font-weight: 300;
+    font-weight: bold;
     color: #86C67C;
-    padding: 20px;
   }
 
-  li {
+  .restaurants {
     padding: 20px;
   }
 
@@ -69,7 +80,11 @@
 
 /* Medium (desktops, 992px and up) to large devices (large desktops, 1200px and up)*/
 @media screen and (min-width: @screen-md-min) and (max-width: @screen-lg-min) {
-
+      #map {
+        display: flex;
+        position: relative;
+        flex-wrap: wrap;
+      }
   }
 
 /* Small (screens, 768px and up) to medium devices (medium desktops, 992px and up)*/
@@ -83,6 +98,7 @@
         }
 
         #map {
+            in
             display: flex;
             position: relative;
         }

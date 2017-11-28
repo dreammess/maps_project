@@ -17,7 +17,13 @@ User interface includes the ability to filter by price category, individual rest
 # Getting Started
 
  1. [Download](https://github.com/dreammess/maps_project "Download") or clone the files from the Github repository. 
- 2. Start up a local server using http-server (available from npm) and visit the site at localhost:8080.
+ 2. Install http-server using npm install* and the command: `npm install --global http-server`
+ 3. Start up a local server using the command:   
+ `http-server`   
+Now visit the site at localhost:8080.   
+Alternatively, use a local server of your own choice to view the page.
+ 
+ \* **NOTE**: For more information on how to install npm, please visit [blog.npmjs.org](http://blog.npmjs.org/post/85484771375/how-to-install-npm "Website"
 
 ***
 

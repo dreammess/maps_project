@@ -109,10 +109,15 @@ function ViewModel() {
     // INFO WINDOW DISPLAYED ON SELECTED MARKERS. CHANGES DYNAMICALLY
     self.largeInfoWindow = new google.maps.InfoWindow();
 
-
+    // CLEAR ANY ANIMATIONS ON THE MARKERS
+    self.clearMarkersAnimation = function () {
+        self.markers().forEach(function (marker) { marker.setAnimation(null); });
+    };
 
     self.populateInfoWindow = function (marker, infoWindow) {
         var content = "";
+        self.clearMarkersAnimation();
+        marker.setAnimation(google.maps.Animation.BOUNCE);
         if (infoWindow.marker !== marker) {
             infoWindow.marker = marker;
             // MAKE AJAX REQUEST TO FOURSQUARE API
@@ -139,6 +144,7 @@ function ViewModel() {
                     infoWindow.setContent(content);
                     infoWindow.addListener("closeclick", function () {
                         infoWindow.marker = null;
+                        marker.setAnimation(null);
                     });
                     infoWindow.open(map, marker);
                 },
@@ -148,6 +154,7 @@ function ViewModel() {
                     infoWindow.setContent(content);
                     infoWindow.addListener("closeclick", function () {
                         infoWindow.marker = null;
+                        marker.setAnimation(null);
                     });
                     infoWindow.open(map, marker);
                 }
@@ -159,7 +166,7 @@ function ViewModel() {
     // USED IN THE LIST VIEW IN index.html
     self.populateInfoWindowByListClick = function (marker) {
         self.hideMarkers();
-        marker.setMap(map);
+        marker.setVisible(true);
         marker.filtered(false);
         self.populateInfoWindow(marker, self.largeInfoWindow);
     };
@@ -169,8 +176,9 @@ function ViewModel() {
         self.largeInfoWindow.marker = null;
         self.largeInfoWindow.close();
         self.markers().forEach(function (marker) {
-            marker.setMap(map);
+            marker.setVisible(true);
             marker.filtered(false);
+            marker.setAnimation(null);
         });
     };
 
@@ -179,19 +187,23 @@ function ViewModel() {
         self.largeInfoWindow.marker = null;
         self.largeInfoWindow.close();
         self.markers().forEach(function (marker) {
-            marker.setMap(null);
+            marker.setVisible(false);
             marker.filtered(true);
+            marker.setAnimation(null);
         });
     };
 
     // FILTER DIPLAYED MARKERS BASED ON USER SELECTION
     self.filterMarkers = function (filterCriteria) {
+        self.largeInfoWindow.marker = null;
+        self.largeInfoWindow.close();
         self.markers().forEach(function (marker) {
+            marker.setAnimation(null);
             if (marker.type != filterCriteria) {
-                marker.setMap(null);
+                marker.setVisible(false);
                 marker.filtered(true);
             } else {
-                marker.setMap(map);
+                marker.setVisible(true);
                 marker.filtered(false);
             }
         });
@@ -301,6 +313,12 @@ function initMap() {
     });
 
 
-//BIND THE ViewModel TO OUT PAGE INSIDE OF initMap
+// BIND THE ViewModel TO OUT PAGE INSIDE OF initMap
     ko.applyBindings(new ViewModel());
 } // END initMap().
+
+// HANDLE ANY FAILURES LOADING THE MAP.
+function mapsError() {
+    alert("Oh no, something went wrong! The map isn't loading:(\nPlease try back later.")
+}
+

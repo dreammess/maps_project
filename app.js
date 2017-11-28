@@ -319,6 +319,5 @@ function initMap() {
 
 // HANDLE ANY FAILURES LOADING THE MAP.
 function mapsError() {
-    alert("Oh no, something went wrong! The map isn't loading:(\nPlease try back later.")
+    alert("Oh no, something went wrong! The map isn't loading:(\nPlease try back later.");
 }
-
